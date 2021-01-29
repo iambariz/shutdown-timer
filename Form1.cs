@@ -13,8 +13,7 @@ namespace shutdown_timer
 {
     public partial class Form1 : Form
     {
-        int i = 0;
-        double counter;
+        double counter = 0;
 
         public Form1()
         {
@@ -42,7 +41,7 @@ namespace shutdown_timer
             ManagementClass mClass = new ManagementClass("Win32_OperatingSystem");
             mClass.Get();
             ManagementBaseObject mboClass_shutdown = mClass.GetMethodParameters("Win32Shutdown");
-            label5.Text = mboClass_shutdown.GetType().ToString();
+            //label5.Text = mboClass_shutdown.GetType().ToString();
             mClass.Scope.Options.EnablePrivileges = true;
             mboClass_shutdown["Flags"] = 1;
             mboClass_shutdown["Reserved"] = 0;
@@ -60,26 +59,30 @@ namespace shutdown_timer
         }
 
 
-        private void startButton_Click(object sender, EventArgs e)
+        public void startButton_Click(object sender, EventArgs e)
         {
-            //label5.Text = "Hello world";
-            timer1.Enabled = true;
+            //Console.WriteLine("Start");
             startButton.Text = "Stop";
-            if (counter > 0)
+            timer1.Enabled = true;
+            //Console.WriteLine(counter);
+            if (counter != 0)
             {
+                //Console.WriteLine("Inner");
                 counter = 0;
                 timer1.Enabled = false;
                 startButton.Text = "Start";
-                label5.Text = counter.ToString();
             }
-            getNum();
-
+            else
+            {
+                getNum();
+                //Console.WriteLine("Ends");
+            }
         }
 
         public void timer1_Tick(object sender, EventArgs e)
         {
             displayNums(counter);
-            label6.Text = Convert.ToString(counter);
+//            label6.Text = Convert.ToString(counter);
             //label5.Text = "i:" + i++;
             if(counter == 0)
             {
@@ -89,10 +92,6 @@ namespace shutdown_timer
             counter--;
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-        
-        }
 
         public void getNum()
         {
