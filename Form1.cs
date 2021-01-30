@@ -71,9 +71,11 @@ namespace shutdown_timer
                 counter = 0;
                 timer1.Enabled = false;
                 startButton.Text = "Start";
+                makeReadOnly();
             }
             else
             {
+                makeReadOnly();
                 getNum();
                 //Console.WriteLine("Ends");
             }
@@ -113,6 +115,22 @@ namespace shutdown_timer
             numericUpDown1.Value = Convert.ToDecimal(hour);
             numericUpDown2.Value = Convert.ToDecimal(mins);
             numericUpDown3.Value = Convert.ToDecimal(seconds);
+        }
+
+        public void makeReadOnly()
+        {
+            if(timer1.Enabled == true){
+                numericUpDown1.ReadOnly = true;
+                numericUpDown2.ReadOnly = true;
+                numericUpDown3.ReadOnly = true;
+            }
+            else
+            {
+                numericUpDown1.ReadOnly = false;
+                numericUpDown2.ReadOnly = false;
+                numericUpDown3.ReadOnly = false;
+            }
+
         }
     }
 }
